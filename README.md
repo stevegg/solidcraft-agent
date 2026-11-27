@@ -1,6 +1,6 @@
 # solidcraft-agent
 
-A command-line tool built for AI agents (Claude Code and others) to drive the **running [SolidCraft](https://docs.solidcraft.io/) CAD app**, plus a Claude Code plugin with a skill that teaches the agent to use it.
+A command-line tool built for AI agents to drive the **running [SolidCraft](https://docs.solidcraft.io/) CAD app**, plus a skill that teaches the agent to use it, packaged for both **Claude Code** (plugin and marketplace) and **OpenCode** (skill catalog).
 
 - **Live:** the agent builds in the open SolidCraft window, and you watch the model appear.
 - **No background process:** each call connects to the app, runs one action, prints one line of compact JSON and exits. The app keeps the design and its undo history between calls.
@@ -61,6 +61,38 @@ To let the agent run the CLI without asking each time, add this to the `permissi
 
 ```json
 "Bash(solidcraft-agent:*)"
+```
+
+### 4. OpenCode (the same skill)
+
+OpenCode reads the same `SKILL.md`. Pick one of these:
+
+**a) Remote skill catalog** (updates automatically). Add this to `~/.config/opencode/opencode.json`, or to a project's `opencode.json`:
+
+```jsonc
+{
+  "skills": ["https://raw.githubusercontent.com/stevegg/solidcraft-agent/main/plugin/skills/"]
+}
+```
+
+**b) Installed by the script.** This copies the skill to `~/.config/opencode/skills/solidcraft-agent/`. Run it again to update:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/stevegg/solidcraft-agent/main/install.sh | bash -s -- --opencode
+# skill only (CLI already installed):  ... | bash -s -- --opencode --skill-only
+```
+
+OpenCode also picks the skill up from `~/.claude/skills/` and `~/.agents/skills/` if you keep it there.
+
+To let OpenCode run the CLI and load the skill without asking each time, add these to the `permissions` list in `opencode.json`:
+
+```jsonc
+{
+  "permissions": [
+    { "action": "shell", "resource": "solidcraft-agent *", "effect": "allow" },
+    { "action": "skill", "resource": "solidcraft-agent", "effect": "allow" }
+  ]
+}
 ```
 
 Then ask for a part, e.g. *"Design a 40 × 30 × 10 mm block with a 6 mm hole in SolidCraft and export it as 3MF."*

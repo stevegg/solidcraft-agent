@@ -1,0 +1,9 @@
+{
+  "skills": [
+    {
+      "name": "solidcraft-agent",
+      "version": "1",
+      "files": ["SKILL.md"]
+    }
+  ]
+}
