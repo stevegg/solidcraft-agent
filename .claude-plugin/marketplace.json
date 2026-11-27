@@ -1,0 +1,17 @@
+{
+  "name": "solidcraft-agent",
+  "owner": { "name": "stevegg" },
+  "metadata": {
+    "description": "The solidcraft-agent plugin: drive the SolidCraft CAD app from Claude Code."
+  },
+  "plugins": [
+    {
+      "name": "solidcraft-agent",
+      "source": "./plugin",
+      "description": "Build, tweak, measure, render and export 3D models live in SolidCraft with the solidcraft-agent CLI.",
+      "version": "0.1.0",
+      "category": "design",
+      "keywords": ["cad", "solidcraft", "3d-printing"]
+    }
+  ]
+}

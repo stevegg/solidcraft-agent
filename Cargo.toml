@@ -1,0 +1,28 @@
+[package]
+name = "solidcraft-agent"
+description = "A command-line tool for AI agents to drive the running SolidCraft CAD app: one tool call or a whole batch per invocation, compact JSON out"
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/stevegg/solidcraft-agent"
+rust-version = "1.95"
+publish = false
+
+[[bin]]
+name = "solidcraft-agent"
+path = "src/main.rs"
+
+# SolidCraft's own crates, pinned to the commit this tool is built and tested against.
+# To follow a newer SolidCraft, change both revs below together.
+[dependencies]
+solidcraft-engine = { git = "https://github.com/tangency-labs/solidcraft", rev = "140b1ec308bba29276e42313eec8f5a4a02aeb66" }
+solidcraft-mcp = { git = "https://github.com/tangency-labs/solidcraft", rev = "140b1ec308bba29276e42313eec8f5a4a02aeb66" }
+serde_json = "1"
+
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 16
+debug = false
+strip = true

@@ -1,0 +1,10 @@
+{
+  "name": "solidcraft-agent",
+  "version": "0.1.0",
+  "description": "Drive the SolidCraft CAD app live from Claude: build, tweak, measure, render and export 3D models with the solidcraft-agent CLI (single commands or whole batch builds, compact JSON replies).",
+  "author": { "name": "stevegg" },
+  "homepage": "https://github.com/stevegg/solidcraft-agent",
+  "repository": "https://github.com/stevegg/solidcraft-agent",
+  "license": "MIT OR Apache-2.0",
+  "keywords": ["cad", "solidcraft", "3d-printing", "modeling", "stl"]
+}
