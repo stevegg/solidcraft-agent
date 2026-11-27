@@ -65,12 +65,14 @@ To let the agent run the CLI without asking each time, add this to the `permissi
 
 ### 4. OpenCode (the same skill)
 
-OpenCode reads the same `SKILL.md`. Pick one of these:
+OpenCode reads the same `SKILL.md`. It is a **skill**, not an OpenCode plugin, so it won't appear in OpenCode's Plugins list. Pick one of these:
 
-**a) Remote skill catalog** (updates automatically). Add this to `~/.config/opencode/opencode.json`, or to a project's `opencode.json`:
+**a) Remote skill catalog** (updates automatically). Add a `"skills"` line **inside the existing top-level object** of `~/.config/opencode/opencode.json`, or of a project's `opencode.json`, next to keys like `"model"`. Don't add a second `{ }`:
 
 ```jsonc
 {
+  "$schema": "https://opencode.ai/config.json",
+  "model": "…your existing settings…",
   "skills": ["https://raw.githubusercontent.com/stevegg/solidcraft-agent/main/plugin/skills/"]
 }
 ```
@@ -84,16 +86,16 @@ curl -fsSL https://raw.githubusercontent.com/stevegg/solidcraft-agent/main/insta
 
 OpenCode also picks the skill up from `~/.claude/skills/` and `~/.agents/skills/` if you keep it there.
 
-To let OpenCode run the CLI and load the skill without asking each time, add these to the `permissions` list in `opencode.json`:
+To let OpenCode run the CLI and load the skill without asking each time, add these two rules to the `"permissions"` list in `opencode.json`. If the list doesn't exist yet, add it as another top-level key:
 
 ```jsonc
-{
   "permissions": [
     { "action": "shell", "resource": "solidcraft-agent *", "effect": "allow" },
     { "action": "skill", "resource": "solidcraft-agent", "effect": "allow" }
   ]
-}
 ```
+
+After editing the config, restart OpenCode's background server so it reloads: `opencode service restart`. To check it worked, ask OpenCode *"which skills do you have?"*; `solidcraft-agent` should be in the list. You can also mention `@solidcraft-agent` in a prompt to load it explicitly.
 
 Then ask for a part, e.g. *"Design a 40 × 30 × 10 mm block with a 6 mm hole in SolidCraft and export it as 3MF."*
 
